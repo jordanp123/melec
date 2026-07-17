@@ -17,8 +17,10 @@ ok(acks.length === 1, "exactly one ack overlay created at init", acks.length);
 var ackTxt = acks[0] ? acks[0].textContent : "";
 ok(/tool\/aid to help you when working around mine electrical systems/.test(ackTxt), "ack: opening sentence present");
 ok(/publicly available federal and state resources/.test(ackTxt), "ack: sources sentence present");
-ok(/should not be relied upon for completely accurate and thorough results/.test(ackTxt), "ack: reliance caveat present");
-ok(/software glitches do happen/.test(ackTxt), "ack: glitches wording present");
+ok(/personal hobby project/.test(ackTxt), "ack: hobby-project framing present");
+ok(/no warranty and no guarantee of accuracy, completeness, or suitability/.test(ackTxt), "ack: as-is / no-warranty caveat present");
+ok(/Errors and miscalculations should be expected/.test(ackTxt), "ack: errors-expected wording present");
+ok(/without independently checking it/.test(ackTxt), "ack: independent-verification wording present");
 ok(/GNU General Public License v3/.test(ackTxt), "ack: GPL v3 statement present");
 ok(/I acknowledge/.test(ackTxt), "ack: acknowledge button present");
 // dialog semantics

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-e+ygniN5OKehzFNE3SZ8ES9lG1f3Jtx3c0+TlOvlYv8='; style-src 'sha256-BiF4P2vNY+DWUmFYjdf0KtSqfNr9NDRrGXIwFdAtShw='; img-src 'self'; worker-src 'self'; child-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-crtAslGKRNx8R8F6EGP6MWMCR35M9cscn5C0E02fe+I='; style-src 'sha256-BiF4P2vNY+DWUmFYjdf0KtSqfNr9NDRrGXIwFdAtShw='; img-src 'self'; worker-src 'self'; child-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mine Electrical Calculation Aid</title>
@@ -3051,10 +3051,13 @@ function buildAck(){
     rel:"noopener noreferrer",text:"GNU General Public License v3"});
   var box=h("div",{class:"ack-modal",role:"dialog","aria-modal":"true","aria-labelledby":"ack-title"},[
     h("h2",{id:"ack-title",text:"Please read before using this aid"}),
-    h("p",{text:"This Web page is a tool/aid to help you when working around mine electrical "
-      +"systems; its data comes from publicly available federal and state resources."}),
-    h("p",{text:"However, this aid should not be relied upon for completely accurate and "
-      +"thorough results — software glitches do happen."}),
+    h("p",{text:"This Web page is a personal hobby project — a tool/aid to help you when working "
+      +"around mine electrical systems; its data comes from publicly available federal and state "
+      +"resources."}),
+    h("p",{text:"It is provided as-is, with no warranty and no guarantee of accuracy, completeness, "
+      +"or suitability for any purpose. Errors and miscalculations should be expected — do not treat "
+      +"any result as correct without independently checking it. The full disclaimer is on the "
+      +"About tab."}),
     h("p",null,["The software is licensed under the ",lnk,"."]),
     btn
   ]);
