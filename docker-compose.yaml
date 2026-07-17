@@ -1,0 +1,51 @@
+services:
+  website:
+    build: .
+    container_name: melec
+    read_only: true
+    user: 8001:8001
+    restart: unless-stopped
+    security_opt:  #Have to disable if using the Ubuntu SNAP package for docker
+      - no-new-privileges=true
+    cap_drop:
+      - ALL
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
+          pids: 512
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=256M
+      - /run:rw,noexec,nosuid,nodev,size=64M
+      - /var/cache/nginx/:rw,noexec,nosuid,nodev,size=256M
+    networks:
+      backend:
+  cloudflare_tunnel:
+    user: 8000:8000
+    container_name: cloudflared-tunnel-melec
+    image: cloudflare/cloudflared
+    read_only: true
+    cpu_shares: 768
+    env_file:
+      - .env
+    deploy:
+     resources:
+       limits:
+          memory: 256M
+          pids: 4096
+    cap_drop:
+      - ALL
+    security_opt:
+        - no-new-privileges=true
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+    networks:
+      backend:
+      frontend:
+networks:
+  backend:
+    internal: true
+  frontend:

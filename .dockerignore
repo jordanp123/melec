@@ -1,0 +1,33 @@
+# .dockerignore — excludes files from the Docker build context (`build: .`).
+# Syntax is one pattern per line, same globbing as .gitignore:
+#   name        matches a file/dir at the ROOT of the context only
+#   dir/        NOT special — use "dir" or "dir/**" (unlike .gitignore)
+#   *.ext       wildcard within one path segment
+#   **/name     matches at any depth
+#   !pattern    re-includes something excluded by an earlier line
+
+# Secrets — must never reach the Docker daemon or an image layer
+docker-compose.yaml
+.env
+
+# Audit artifact with superseded (known-wrong) safety data
+*.bak
+
+# Deploy/transfer artifacts and transient tooling downloads — the Dockerfile
+# COPYs files explicitly, but keep them out of the build context anyway so a
+# future `COPY .` can never sweep them into a served image
+*.zip
+*.tar.xz
+node
+
+# Tooling/local config, not deployment inputs
+.claude
+.dockerignore
+.gitignore
+Dockerfile
+tests
+
+# Personal reference notes — not for the web root
+*.txt
+*.pdf
+*.htm

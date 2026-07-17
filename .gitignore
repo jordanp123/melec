@@ -1,0 +1,22 @@
+# Secrets — must never enter version control. The deploy host's .env carries
+# TUNNEL_TOKEN; this line must exist BEFORE the first commit on any clone.
+.env
+.env.*
+
+# Local Claude Code config (permission allowlists, machine-local paths).
+# If a shared .claude/settings.json is ever added, re-include it explicitly.
+.claude/
+
+# Ad-hoc backups and build artifacts — regenerate, don't track
+*.bak
+*.zip
+*.tar.xz
+
+# Transient tooling downloads (standalone node binary used to run the tests)
+node
+node_modules/
+
+# Reference material not part of the deployable site
+*.pdf
+*.txt
+*.htm
