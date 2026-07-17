@@ -1,33 +1,19 @@
-# .dockerignore — excludes files from the Docker build context (`build: .`).
+# .dockerignore — ALLOW LIST for the Docker build context (`build: .`).
+# `*` excludes everything (dotfiles included — Go glob, not shell glob);
+# only the !re-includes below reach the Docker daemon. Any new file is
+# excluded automatically, so nothing can leak into an image by default.
+# To ship a new file: add a !line here AND a COPY line in the Dockerfile.
+#
 # Syntax is one pattern per line, same globbing as .gitignore:
 #   name        matches a file/dir at the ROOT of the context only
-#   dir/        NOT special — use "dir" or "dir/**" (unlike .gitignore)
-#   *.ext       wildcard within one path segment
-#   **/name     matches at any depth
 #   !pattern    re-includes something excluded by an earlier line
+#   !dir/**     needed to re-include a directory's contents (just !dir is not)
 
-# Secrets — must never reach the Docker daemon or an image layer
-docker-compose.yaml
-.env
+# Exclude everything by default
+*
 
-# Audit artifact with superseded (known-wrong) safety data
-*.bak
-
-# Deploy/transfer artifacts and transient tooling downloads — the Dockerfile
-# COPYs files explicitly, but keep them out of the build context anyway so a
-# future `COPY .` can never sweep them into a served image
-*.zip
-*.tar.xz
-node
-
-# Tooling/local config, not deployment inputs
-.claude
-.dockerignore
-.gitignore
-Dockerfile
-tests
-
-# Personal reference notes — not for the web root
-*.txt
-*.pdf
-*.htm
+# Build inputs — exactly the files the Dockerfile COPYs
+!nginx.conf
+!index.html
+!sw.js
+!favicon.ico
