@@ -7,12 +7,19 @@ with no build step, no dependencies, and no network calls, so the page works
 identically from a web server, a USB stick, or (via the bundled service
 worker) fully offline underground.
 
-> **Disclaimer.** This tool is an *aid* that reproduces standard mine
-> electrical calculation methods and published reference tables. It is not
-> all-inclusive and is not a substitute for the regulations or for qualified
-> engineering judgment. Always verify results against the motor nameplate,
-> the current regulation, and manufacturer data before relying on them. See
-> the **About / Disclaimer** tab in the app for full sourcing and errata.
+> **Disclaimer.** This is a personal **hobby project**, built and maintained
+> in spare time. It is provided as-is, with no warranty of any kind and no
+> guarantee of accuracy, completeness, or suitability for any purpose.
+> Errors, omissions, and miscalculations — while never intended — are
+> possible and **should be expected**; do not treat any output as correct
+> without independently checking it.
+>
+> The tool is an *aid* that reproduces standard mine electrical calculation
+> methods and published reference tables. It is not all-inclusive and is not
+> a substitute for the regulations or for qualified engineering judgment.
+> Always verify results against the motor nameplate, the current regulation,
+> and manufacturer data before relying on them. See the **About /
+> Disclaimer** tab in the app for full sourcing and errata.
 
 ## Calculators
 

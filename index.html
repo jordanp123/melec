@@ -555,7 +555,12 @@ footer.foot{color:var(--muted);font-size:12.5px;text-align:center;padding:22px 0
 <section class="panel" id="p-about" role="tabpanel" aria-labelledby="t-about">
   <div class="card">
     <h2>Definitions, Sources &amp; Disclaimer</h2>
-    <div class="callout"><b>Disclaimer.</b> This page is an <b>aid</b> that reproduces standard mine electrical
+    <div class="callout"><b>Disclaimer.</b> This is a personal <b>hobby project</b>, built and maintained in
+      spare time. It is provided as-is, with no warranty of any kind and <b>no guarantee of accuracy,
+      completeness, or suitability for any purpose</b>. Errors, omissions, and miscalculations &mdash; while
+      never intended &mdash; are possible and <b>should be expected</b>; do not treat any output as correct
+      without independently checking it.
+      This page is an <b>aid</b> that reproduces standard mine electrical
       calculation methods and reference tables. It is <b>not all-inclusive</b>, is not a
       substitute for the regulations or for qualified engineering judgment, and is intended <b>only as an aide in
       gaining compliance</b> with the applicable rules. The underlying material is based on the National Electrical
@@ -621,8 +626,9 @@ footer.foot{color:var(--muted);font-size:12.5px;text-align:center;padding:22px 0
         your device.</li>
       <li><b>No third-party network use.</b> The page loads no external scripts, styles, fonts, images, or trackers.
         A Content-Security-Policy blocks every outbound connection except to this site's own origin, which is used
-        only to keep the offline copy fresh, so nothing you enter can leak. The only external link on the page is
-        to the GNU license text; nothing is loaded from it unless you click it.</li>
+        only to keep the offline copy fresh, so nothing you enter can leak. The only external links on the page
+        are to the GNU license text and to this project's source code on GitHub; nothing is loaded from either
+        unless you click it.</li>
       <li><b>Works offline.</b> A service worker keeps the latest copy of this page on your device. With a
         connection, every load fetches the live version; without one, the saved copy opens instead. The copy is
         only as fresh as your last visit with a connection. On iPhone/iPad, use Share &rarr; Add to Home Screen
@@ -632,8 +638,11 @@ footer.foot{color:var(--muted);font-size:12.5px;text-align:center;padding:22px 0
         and the offline copy of the page itself (Cache Storage). Neither holds anything you enter.</li>
     </ul>
 
-    <h3>Author</h3>
-    <p class="small">Jordan Rose &mdash; Made as a Hobby Project</p>
+    <h3>Author &amp; source code</h3>
+    <p class="small">Jordan Rose &mdash; Made as a Hobby Project. The complete source code &mdash; including the
+      reference-table transcriptions, the calculation logic, and the test suite &mdash; is published at
+      <a href="https://github.com/jordanp123/melec" target="_blank" rel="noopener noreferrer">github.com/jordanp123/melec</a>,
+      where corrections and issue reports are welcome.</p>
 
     <h3>License</h3>
     <p class="small">This is free software, licensed under the
