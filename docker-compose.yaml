@@ -1,3 +1,9 @@
+x-logging: &default-logging
+  driver: local
+  options:
+    max-size: "10m"
+    max-file: "3"
+
 services:
   website:
     build: .
@@ -5,6 +11,7 @@ services:
     read_only: true
     user: 8001:8001
     restart: unless-stopped
+    logging: *default-logging
     security_opt:  #Have to disable if using the Ubuntu SNAP package for docker
       - no-new-privileges=true
     cap_drop:
@@ -30,16 +37,18 @@ services:
     env_file:
       - .env
     deploy:
-     resources:
-       limits:
+      resources:
+        limits:
+          cpus: '1'
           memory: 256M
-          pids: 4096
+          pids: 256
     cap_drop:
       - ALL
     security_opt:
         - no-new-privileges=true
     restart: unless-stopped
-    command: tunnel run
+    logging: *default-logging
+    command: tunnel --no-autoupdate --metrics 127.0.0.1:20241 run
     environment:
       TUNNEL_TOKEN: ${TUNNEL_TOKEN}
     networks:
