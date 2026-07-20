@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-crtAslGKRNx8R8F6EGP6MWMCR35M9cscn5C0E02fe+I='; style-src 'sha256-BiF4P2vNY+DWUmFYjdf0KtSqfNr9NDRrGXIwFdAtShw='; img-src 'self'; worker-src 'self'; child-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; require-trusted-types-for 'script'; trusted-types">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-TOPg5QsyTX4PMNKIyPuiKEZBMxbxh1IPTzsh2oHr6Xk='; style-src 'sha256-BiF4P2vNY+DWUmFYjdf0KtSqfNr9NDRrGXIwFdAtShw='; img-src 'self'; worker-src 'self'; child-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mine Electrical Calculation Aid</title>
@@ -3196,10 +3196,14 @@ function bootApp(){
   /* Offline capability: register a network-first service worker (sw.js). Online loads always
      fetch the live copy, so a deployed fix is picked up immediately and refreshes the on-device
      copy; with no signal the worker serves that copy instead. Registration is unavailable or
-     fails harmlessly when the page is opened as a saved file (file://). */
+     fails harmlessly when the page is opened as a saved file (file://). The URL is absolute so
+     the offline navigate-fallback shell (which can be served at any bookmarked path) never
+     resolves it relative to a wrong location, and the rejection is logged rather than swallowed
+     so a policy or scheme problem that blocks registration is visible in the console instead of
+     silently costing offline support. */
   if("serviceWorker" in navigator){
     try{
-      navigator.serviceWorker.register("sw.js").catch(function(){});
+      navigator.serviceWorker.register("/sw.js").catch(function(e){console.warn("Service worker registration failed:",e);});
       /* Ask for durable storage so the offline copy survives cache pressure.
          No-op where unsupported; does NOT exempt Safari's 7-day storage purge
          (see the Works-offline note about Add to Home Screen). */

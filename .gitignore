@@ -1,7 +1,12 @@
 # Secrets — must never enter version control. The deploy host's .env carries
 # TUNNEL_TOKEN; this line must exist BEFORE the first commit on any clone.
+# The compose override file is where credentials get pasted "temporarily",
+# and keys/certs never belong in a public repo.
 .env
 .env.*
+docker-compose.override.y*ml
+*.pem
+*.key
 
 # Local Claude Code config (permission allowlists, machine-local paths).
 # If a shared .claude/settings.json is ever added, re-include it explicitly.

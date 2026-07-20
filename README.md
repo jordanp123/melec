@@ -46,10 +46,11 @@ documented on the About tab rather than applied silently.
 | `index.html` | The entire application (single inline `<script>` and `<style>`) |
 | `sw.js` | Network-first service worker: online visitors always get the freshly deployed copy; the last good copy is served from Cache Storage when offline or on a stalled connection |
 | `favicon.ico` | Site icon |
+| `404.html` | Minimal custom 404 page |
 | `nginx.conf` | Production server config: security headers, header CSP, GET/HEAD only |
-| `Dockerfile` | `nginx-unprivileged:alpine` + the three static files above |
+| `Dockerfile` | `nginxinc/nginx-unprivileged:alpine-slim` + the four static files above |
 | `docker-compose.yaml` | Hardened two-container stack: the nginx site on an internal-only network, published through a Cloudflare Tunnel (`cloudflared`) |
-| `rehash.sh` | Recomputes the CSP `script-src`/`style-src` hashes after any edit to the inline script or style (see below) |
+| `rehash.sh` | Recomputes the CSP `script-src`/`style-src` hashes after any edit to the inline script or style; `--check` verifies without writing (see below) |
 | `tests/` | Node-based assertion suite (~4,500 assertions) — see `tests/README.md` |
 
 ## Security model
@@ -77,12 +78,15 @@ Because the CSP pins the inline script and style by hash, **any** edit to the
 hashes are recomputed:
 
 ```sh
-./rehash.sh   # patches BOTH the <meta> CSP in index.html and the header CSP in nginx.conf
+./rehash.sh          # patches BOTH the <meta> CSP in index.html and the header CSP in nginx.conf
+./rehash.sh --check  # verify only: hashes fresh and the two CSPs in lockstep (pre-commit/CI gate)
 ```
 
 `rehash.sh` needs only `python3` and is idempotent. If you edit and forget to
-run it, the deployed page shows the red "failed integrity check" screen —
-that is the mechanism working, not a server problem.
+run it, the deployed page shows the red "This tool did not load" screen —
+that is the mechanism working, not a server problem. Note that `rehash.sh`
+only syncs the two hash tokens: any **other** CSP directive must be edited in
+both `index.html` and `nginx.conf` by hand (`--check` fails if they drift).
 
 Then run the tests:
 
@@ -109,3 +113,18 @@ nginx serves on port 8080 inside the isolated `backend` network;
 inbound ports are exposed on the host. Responses are `Cache-Control:
 no-cache` (always revalidate) so a deployed fix is picked up immediately;
 offline availability is the service worker's job, not the HTTP cache's.
+
+### Cloudflare settings this site depends on
+
+The CSP allows the inline script **only by its SHA-256 hash**, so any
+Cloudflare feature that rewrites the page's HTML takes the whole site down:
+
+- **Rocket Loader must stay OFF.** It deactivates the inline script tag (by
+  rewriting its `type`) and re-loads it through a helper script that the
+  hash-locked CSP blocks — every visitor would get the red load-error screen
+  until the toggle is reverted.
+- Keep other HTML-rewriting features (e.g. **Email Obfuscation**) off too;
+  the scripts they inject are silently CSP-blocked at best.
+- Cloudflare's normal per-request injection of its bot-management script is
+  expected and harmless: it lands *after* the app script and is blocked by
+  the CSP without affecting the app.

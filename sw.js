@@ -4,7 +4,11 @@
    Offline (or stalled past NETWORK_TIMEOUT_MS on marginal signal): the
    last-good copy is served from Cache Storage instead.
    NOTE: this file is served with the site's CSP header; the worker's own
-   fetch() calls are governed by that policy's connect-src 'self'. */
+   fetch() calls are governed by that policy's connect-src 'self'.
+   DEPLOY NOTE: never delete this file from the site — an existing
+   registration survives a 404 indefinitely and keeps running (zombie
+   worker). To retire it, ship a worker at this same URL whose activate
+   handler calls registration.unregister(). */
 "use strict";
 var CACHE="melec-v3";
 var NETWORK_TIMEOUT_MS=4000;
